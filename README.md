@@ -1,5 +1,5 @@
 # 360-data-table
-a simple data-table with custom components and inline edit
+a simple data-table experiment from [ngx-datatable](https://github.com/swimlane/ngx-datatable)
 
 ##
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5.
