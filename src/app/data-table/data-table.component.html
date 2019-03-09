@@ -147,8 +147,30 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Item Description or NMFC" [prop]="'description'" [width]="400"></ngx-datatable-column>
           <ngx-datatable-column name="Reference" [prop]="'reference'"></ngx-datatable-column>
-          <ngx-datatable-column name="Reference Type" [prop]="'referenceType'"></ngx-datatable-column>
-          <ngx-datatable-column name="Package Type" [prop]="'packageType'"></ngx-datatable-column>
+          <ngx-datatable-column name="Reference Type" [prop]="'referenceType'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <select class="data-table-select" [value]="value">
+                <option
+                  *ngFor="let referenceType of referenceTypes"
+                  value="{{ referenceType.value }}">
+                  {{ referenceType.label }}
+                </option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Package Type" [prop]="'packageType'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <select class="data-table-select" [value]="value">
+                <option
+                  *ngFor="let packageType of packageTypes"
+                  value="{{ packageType.value }}">
+                  {{ packageType.label }}
+                </option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
           <ngx-datatable-column name="Count" [prop]="'count'"></ngx-datatable-column>
           <ngx-datatable-column name="Weight" [prop]="'weight'">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"

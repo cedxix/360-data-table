@@ -41,6 +41,26 @@ export class DataTableComponent implements OnInit {
     }
   ];
 
+  referenceTypes = [
+    {
+      label: 'PO NBR',
+      value: 'PO NBR'
+    }, {
+      label: 'I DONT KNOW NBR',
+      value: 'IDK'
+    }
+  ];
+  packageTypes = [
+    {
+      label: 'Boxes',
+      value: 'Box'
+    },
+    {
+      label: 'Envelop',
+      value: 'envelop'
+    }
+  ];
+
   constructor() {
   }
 
@@ -100,11 +120,8 @@ export class DataTableComponent implements OnInit {
       stopItems: stopItems ? ({
         rows: stopItems.map((item) => ({
           description: get(item, 'itemDescription'),
-          reference: get(item, 'stopItemReferenceNumberAssociations'),
-          referenceType: {
-            label: get(item, 'stopReferenceNumber.referenceNumberTypeCode'),
-            value: get(item, 'stopReferenceNumber.referenceNumberTypeCode')
-          },
+          reference: get(item, 'stopItemReferenceNumberAssociations.0.stopReferenceNumber.referenceNumberValue'),
+          referenceType: get(item, 'stopItemReferenceNumberAssociations.0.stopReferenceNumber.referenceNumberTypeCode'),
           packageType: get(item, 'packagingUnitTypeCode'),
           count: get(item, 'packagingUnitTypeQuantity'),
           weight: {
