@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { chain, get, map } from 'lodash';
+import { chain, get, map, cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-data-table',
@@ -54,8 +54,7 @@ export class DataTableComponent implements OnInit {
     {
       label: 'Boxes',
       value: 'Box'
-    },
-    {
+    }, {
       label: 'Envelop',
       value: 'envelop'
     }
@@ -66,9 +65,31 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.fetchFakeData((data) => {
-      console.log(data);
       this.handlingUnits = this.prepareData(data);
     });
+  }
+
+  onDuplicateHandlingUnit(handlingUnitIndex, handlingUnit) {
+    // FIXME: Implement your duplicate API logic here
+    console.log('you are duplicating', handlingUnit);
+    this.handlingUnits.push(cloneDeep(handlingUnit));
+  }
+
+  onAddHandlingUnit(handlingUnitIndex, rowIndex, stopItemId) {
+    // FIXME: Implement your add API logic here
+    console.log('you are adding', handlingUnitIndex, rowIndex, stopItemId);
+    const stopItemsRows = cloneDeep(this.handlingUnits[handlingUnitIndex].stopItems.rows);
+    this.handlingUnits[handlingUnitIndex].stopItems.rows = [
+      ...stopItemsRows,
+      ...stopItemsRows[rowIndex]
+    ];
+    console.log(this.handlingUnits);
+  }
+
+  onRemoveHandlingUnit(handlingUnitIndex, rowIndex, stopItemId) {
+    // FIXME: Implement your remove API logic here
+    console.log('you are removing', handlingUnitIndex, rowIndex, stopItemId);
+    get(this.handlingUnits, `${handlingUnitIndex}.stopItems.rows`).splice(rowIndex, 1);
   }
 
 
@@ -119,6 +140,7 @@ export class DataTableComponent implements OnInit {
       rows: [row],
       stopItems: stopItems ? ({
         rows: stopItems.map((item) => ({
+          id: get(item, 'stopItemID'),
           description: get(item, 'itemDescription'),
           reference: get(item, 'stopItemReferenceNumberAssociations.0.stopReferenceNumber.referenceNumberValue'),
           referenceType: get(item, 'stopItemReferenceNumberAssociations.0.stopReferenceNumber.referenceNumberTypeCode'),

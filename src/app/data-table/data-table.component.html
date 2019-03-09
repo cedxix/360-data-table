@@ -1,5 +1,5 @@
 <div class="data-table">
-  <div *ngFor="let handlingUnit of handlingUnits"
+  <div *ngFor="let handlingUnit of handlingUnits; let handlingUnitIndex = index"
        class="hanling-unit-container">
 
     <div class="table-card-wrapper">
@@ -140,9 +140,9 @@
           <ngx-datatable-column [width]="150">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
                          let-row="row" let-value="value">
-              <button>co</button>
-              <button>co</button>
-              <button>co</button>
+              <button class="row-action-button blue" (click)="onDuplicateHandlingUnit(handlingUnitIndex, handlingUnit)"><i class="fa fa-copy"></i></button>
+              <button class="row-action-button blue" (click)="onAddHandlingUnit(handlingUnitIndex, rowIndex,row.id)"><i class="fa fa-plus-circle"></i></button>
+              <button class="row-action-button red" (click)="onRemoveHandlingUnit(handlingUnitIndex, rowIndex,row.id)"><i class="fa fa-minus-circle"></i></button>
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Item Description or NMFC" [prop]="'description'" [width]="400"></ngx-datatable-column>
@@ -244,6 +244,10 @@
         </ngx-datatable>
       </div>
     </div>
-
+    <div class="row-action-legend">
+      <div class="blue"><i class="fa fa-copy"></i> Duplicate Handline Unit</div>
+      <div class="row-action-button blue"><i class="fa fa-plus-circle"></i> Add Handline Unit</div>
+      <div class="row-action-button red"><i class="fa fa-minus-circle"></i> Remove Handline Unit</div>
+    </div>
   </div>
 </div>
