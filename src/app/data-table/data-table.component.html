@@ -1,0 +1,90 @@
+<div class="data-table">
+  <div *ngFor="let handlingUnit of handlingUnits" class="hanling-unit-container">
+
+    <div class="table-card-wrapper">
+      <div class="table-card-header">
+        <div class="table-card-header-title">
+          Handling Unit
+        </div>
+        <div class="table-card-table">
+          <ngx-datatable
+            class="hjb fullscreen expandable"
+            [columnMode]="'force'"
+            [rows]="handlingUnit.rows"
+            [columns]="handlingUnit.columns"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="Pickup At" [prop]="'pickupAt'">
+              <!--(change)="updateValue($event, 'pickupAt', rowIndex)"-->
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-row="row" let-value="value">
+                <select class="data-table-select">
+                  <option value="{{ value }}" selected>Stop {{ value }}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="delivery At">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-row="row" let-value="value">
+                <select class="data-table-select">
+                  <option value="{{ value }}" selected>Stop {{ value }}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column
+              name="handlingUnit"
+              [width]="300"
+            >
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-row="row" let-value="value">
+                <select class="data-table-select">
+                  <option value="{{ value }}" selected>{{ value }}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="count"></ngx-datatable-column>
+            <ngx-datatable-column name="weight"></ngx-datatable-column>
+            <ngx-datatable-column name="volume"></ngx-datatable-column>
+            <ngx-datatable-column name="length"></ngx-datatable-column>
+            <ngx-datatable-column name="width"></ngx-datatable-column>
+            <ngx-datatable-column name="height"></ngx-datatable-column>
+            <ngx-datatable-column name="density"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="handlingUnit.stopItems"
+         class="table-card-wrapper table-card-wrapper-items">
+      <div class="table-card-header-title">
+        Items
+      </div>
+      <div class="table-card-table">
+        <ngx-datatable
+          class="hjb fullscreen expandable items"
+          [columnMode]="'force'"
+          [rows]="handlingUnit.stopItems?.rows"
+        >
+          <ngx-datatable-column [width]="150">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-row="row" let-value="value">
+              <button>co</button>
+              <button>co</button>
+              <button>co</button>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Item Description or NMFC" [prop]="'description'" [width]="400"></ngx-datatable-column>
+          <ngx-datatable-column name="Reference" [prop]="'reference'"></ngx-datatable-column>
+          <ngx-datatable-column name="Reference Type" [prop]="'referenceType'"></ngx-datatable-column>
+          <ngx-datatable-column name="Package Type" [prop]="'packageType'"></ngx-datatable-column>
+          <ngx-datatable-column name="Count" [prop]="'count'"></ngx-datatable-column>
+          <ngx-datatable-column name="Weight" [prop]="'weight'"></ngx-datatable-column>
+          <ngx-datatable-column name="Volume" [prop]="'volume'"></ngx-datatable-column>
+          <ngx-datatable-column name="Length" [prop]="'length'"></ngx-datatable-column>
+          <ngx-datatable-column name="Width" [prop]="'width'"></ngx-datatable-column>
+          <ngx-datatable-column name="Density" [prop]="'density'"></ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+
+  </div>
+</div>

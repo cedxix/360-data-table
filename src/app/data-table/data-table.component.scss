@@ -1,0 +1,48 @@
+.data-table {
+  padding: 10px 15px;
+
+  .handling-unit-container {
+    margin-bottom: 100px;
+    background: red;
+  }
+
+  .table-card {
+
+    &-header {
+      background: #fff;
+
+      &-title {
+        font-size: 18px;
+        font-weight: 600;
+        padding: 10px 15px;
+      }
+    }
+
+    &-wrapper {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 6px;
+      box-shadow: 1px 1px 5px #d8d8d8;
+      margin: 15px 0;
+      overflow: hidden;
+
+      &-items {
+        margin-left: 10px;
+        margin-bottom: 0;
+      }
+
+      .data-table-select {
+        background: transparent;
+        border: none;
+        width: 100%;
+
+        &:active,
+        &:focus {
+          outline: none;
+
+        }
+      }
+    }
+  }
+
+}

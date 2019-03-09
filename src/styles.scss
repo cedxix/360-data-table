@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+@import "app/data-table/data-table-theme";
+
+
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+
+  font-family: "Helvetica Neue, Helvetica, Arial", sans-serif;
+  background: #d8d8d845;
+}
