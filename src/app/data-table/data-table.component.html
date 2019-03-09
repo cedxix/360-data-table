@@ -1,5 +1,6 @@
 <div class="data-table">
-  <div *ngFor="let handlingUnit of handlingUnits" class="hanling-unit-container">
+  <div *ngFor="let handlingUnit of handlingUnits"
+       class="hanling-unit-container">
 
     <div class="table-card-wrapper">
       <div class="table-card-header">
@@ -17,17 +18,25 @@
             <ngx-datatable-column name="Pickup At" [prop]="'pickupAt'">
               <!--(change)="updateValue($event, 'pickupAt', rowIndex)"-->
               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
-                           let-row="row" let-value="value">
+                           let-value="value">
                 <select class="data-table-select">
-                  <option value="{{ value }}" selected>Stop {{ value }}</option>
+                  <option
+                    *ngFor="let pickupAt of value"
+                    value="{{ pickupAt.value }}">
+                    Stop {{ pickupAt.label }}
+                  </option>
                 </select>
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="delivery At">
               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
-                           let-row="row" let-value="value">
+                           let-value="value">
                 <select class="data-table-select">
-                  <option value="{{ value }}" selected>Stop {{ value }}</option>
+                  <option
+                    *ngFor="let deliveryAt of value"
+                    value="{{ deliveryAt.value }}">
+                    Stop {{ deliveryAt.label }}
+                  </option>
                 </select>
               </ng-template>
             </ngx-datatable-column>
@@ -36,19 +45,83 @@
               [width]="300"
             >
               <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
-                           let-row="row" let-value="value">
+                           let-value="value">
                 <select class="data-table-select">
                   <option value="{{ value }}" selected>{{ value }}</option>
                 </select>
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="count"></ngx-datatable-column>
-            <ngx-datatable-column name="weight"></ngx-datatable-column>
-            <ngx-datatable-column name="volume"></ngx-datatable-column>
-            <ngx-datatable-column name="length"></ngx-datatable-column>
+            <ngx-datatable-column name="weight">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <div class="split-cells" *ngIf="value.label">
+                  <div>{{ value.label }}</div>
+                  <div>
+                    <select class="data-table-select" [value]="value.unit">
+                      <option
+                        *ngFor="let unit of weightUnits"
+                        value="{{ unit.value }}">
+                        {{ unit.label }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="volume">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <div class="split-cells" *ngIf="value.label">
+                  <div>{{ value.label }}</div>
+                  <div>
+                    <select class="data-table-select" [value]="value.unit">
+                      <option
+                        *ngFor="let unit of volumeUnits"
+                        value="{{ unit.value }}">
+                        {{ unit.label }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="length">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <div class="split-cells" *ngIf="value.label">
+                  <div>{{ value.label }}</div>
+                  <div>
+                    <select class="data-table-select" [value]="value.unit">
+                      <option
+                        *ngFor="let unit of lengthUnits"
+                        value="{{ unit.value }}">
+                        {{ unit.label }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="width"></ngx-datatable-column>
             <ngx-datatable-column name="height"></ngx-datatable-column>
-            <ngx-datatable-column name="density"></ngx-datatable-column>
+            <ngx-datatable-column name="density">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <div class="split-cells" *ngIf="value.label">
+                  <div>{{ value.label }}</div>
+                  <div>
+                    <select class="data-table-select" [value]="value.unit">
+                      <option
+                        *ngFor="let unit of densityUnits"
+                        value="{{ unit.value }}">
+                        {{ unit.label }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </ng-template>
+            </ngx-datatable-column>
           </ngx-datatable>
         </div>
       </div>
@@ -77,11 +150,75 @@
           <ngx-datatable-column name="Reference Type" [prop]="'referenceType'"></ngx-datatable-column>
           <ngx-datatable-column name="Package Type" [prop]="'packageType'"></ngx-datatable-column>
           <ngx-datatable-column name="Count" [prop]="'count'"></ngx-datatable-column>
-          <ngx-datatable-column name="Weight" [prop]="'weight'"></ngx-datatable-column>
-          <ngx-datatable-column name="Volume" [prop]="'volume'"></ngx-datatable-column>
-          <ngx-datatable-column name="Length" [prop]="'length'"></ngx-datatable-column>
+          <ngx-datatable-column name="Weight" [prop]="'weight'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <div class="split-cells" *ngIf="value.label">
+                <div>{{ value.label }}</div>
+                <div>
+                  <select class="data-table-select" [value]="value.unit">
+                    <option
+                      *ngFor="let unit of weightUnits"
+                      value="{{ unit.value }}">
+                      {{ unit.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Volume" [prop]="'volume'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <div class="split-cells" *ngIf="value.label">
+                <div>{{ value.label }}</div>
+                <div>
+                  <select class="data-table-select" [value]="value.unit">
+                    <option
+                      *ngFor="let unit of volumeUnits"
+                      value="{{ unit.value }}">
+                      {{ unit.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Length" [prop]="'length'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <div class="split-cells" *ngIf="value.label">
+                <div>{{ value.label }}</div>
+                <div>
+                  <select class="data-table-select" [value]="value.unit">
+                    <option
+                      *ngFor="let unit of lengthUnits"
+                      value="{{ unit.value }}">
+                      {{ unit.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
           <ngx-datatable-column name="Width" [prop]="'width'"></ngx-datatable-column>
-          <ngx-datatable-column name="Density" [prop]="'density'"></ngx-datatable-column>
+          <ngx-datatable-column name="Density" [prop]="'density'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <div class="split-cells" *ngIf="value.label">
+                <div>{{ value.label }}</div>
+                <div>
+                  <select class="data-table-select" [value]="value.unit">
+                    <option
+                      *ngFor="let unit of densityUnits"
+                      value="{{ unit.value }}">
+                      {{ unit.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
         </ngx-datatable>
       </div>
     </div>
