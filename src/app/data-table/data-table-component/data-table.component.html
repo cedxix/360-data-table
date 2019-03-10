@@ -1,0 +1,241 @@
+<div class="data-table">
+  <div *ngFor="let handlingUnit of handlingUnits; let handlingUnitIndex = index"
+       class="hanling-unit-container">
+
+    <div class="table-card-wrapper">
+      <div class="table-card-header">
+        <div class="table-card-header-title">
+          Handling Unit
+        </div>
+        <div class="table-card-table">
+          <ngx-datatable
+            class="hjb fullscreen expandable"
+            [columnMode]="'force'"
+            [rows]="handlingUnit.rows"
+            [columns]="handlingUnit.columns"
+            [rowHeight]="'auto'"
+          >
+            <ngx-datatable-column name="Pickup At" [prop]="'pickupAt'">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <select class="data-table-select"
+                        (change)="onUpdateHandlingUnitValue($event, 'pickupAt', handlingUnitIndex, rowIndex)"
+                >
+                  <option
+                    *ngFor="let pickupAt of value"
+                    value="{{ pickupAt.value }}">
+                    Stop {{ pickupAt.label }}
+                  </option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="delivery At" [prop]="'deliveryAt'">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <select class="data-table-select"
+                        (change)="onUpdateHandlingUnitValue($event, 'deliveryAt', handlingUnitIndex, rowIndex)"
+                >
+                  <option
+                    *ngFor="let deliveryAt of value"
+                    value="{{ deliveryAt.value }}">
+                    Stop {{ deliveryAt.label }}
+                  </option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="handlingUnit" [width]="300">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <select class="data-table-select"
+                        (change)="onUpdateHandlingUnitValue($event, 'handlingUnit', handlingUnitIndex, rowIndex)">
+                  <option value="{{ value }}" selected>{{ value }}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="count">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-inline-edit-cell [value]="value"
+                                      (change)="onUpdateHandlingUnitValue($event, 'count', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="weight">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-unit-cell [value]="value"
+                               [unitType]="mesuresUnitsTypes.weight"
+                               (change)="onUpdateHandlingUnitValue($event, 'weight', handlingUnitIndex, rowIndex)"
+                ></app-unit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="volume">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-unit-cell [value]="value"
+                               [unitType]="mesuresUnitsTypes.volume"
+                               (change)="onUpdateHandlingUnitValue($event, 'volume', handlingUnitIndex, rowIndex)"></app-unit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="length">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-unit-cell [value]="value"
+                               [unitType]="mesuresUnitsTypes.length"
+                               (change)="onUpdateHandlingUnitValue($event, 'length', handlingUnitIndex, rowIndex)"
+                ></app-unit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="width">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-inline-edit-cell [value]="value"
+                                      (change)="onUpdateHandlingUnitValue($event, 'width', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="height">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-inline-edit-cell [value]="value"
+                                      (change)="onUpdateHandlingUnitValue($event, 'height', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="density">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                           let-value="value">
+                <app-unit-cell [value]="value"
+                               [unitType]="mesuresUnitsTypes.density"
+                               (change)="onUpdateHandlingUnitValue($event, 'density', handlingUnitIndex, rowIndex)"
+                ></app-unit-cell>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="handlingUnit.stopItems"
+         class="table-card-wrapper table-card-wrapper-items">
+      <div class="table-card-header-title">
+        Items
+      </div>
+      <div class="table-card-table">
+        <ngx-datatable
+          class="hjb fullscreen expandable items"
+          [columnMode]="'force'"
+          [rows]="handlingUnit.stopItems?.rows"
+        >
+          <ngx-datatable-column [width]="150">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-row="row" let-value="value">
+              <button class="row-action-button blue"
+                      (click)="onDuplicateHandlingUnit(handlingUnitIndex, handlingUnit)">
+                <i class="fa fa-copy"></i></button>
+              <button class="row-action-button blue"
+                      (click)="onAddHandlingUnit(handlingUnitIndex, rowIndex,row.id)">
+                <i class="fa fa-plus-circle"></i></button>
+              <button class="row-action-button red"
+                      (click)="onRemoveHandlingUnit(handlingUnitIndex, rowIndex,row.id)">
+                <i class="fa fa-minus-circle"></i></button>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Item Description or NMFC"
+                                [prop]="'description'"
+                                [width]="400">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-inline-edit-cell [value]="value"
+                                    (change)="onUpdateStopItemValue($event, 'description', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Reference" [prop]="'reference'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-inline-edit-cell [value]="value"
+                                    (change)="onUpdateStopItemValue($event, 'reference', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Reference Type" [prop]="'referenceType'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <select class="data-table-select" [value]="value">
+                <option
+                  *ngFor="let referenceType of referenceTypes"
+                  value="{{ referenceType.value }}">
+                  {{ referenceType.label }}
+                </option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Package Type" [prop]="'packageType'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <select class="data-table-select" [value]="value">
+                <option
+                  *ngFor="let packageType of packageTypes"
+                  value="{{ packageType.value }}">
+                  {{ packageType.label }}
+                </option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Count" [prop]="'count'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-inline-edit-cell [value]="value"
+                                    (change)="onUpdateStopItemValue($event, 'count', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Weight" [prop]="'weight'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-unit-cell [value]="value"
+                             [unitType]="mesuresUnitsTypes.weight"></app-unit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Volume" [prop]="'volume'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-unit-cell [value]="value"
+                             [unitType]="mesuresUnitsTypes.volume"
+                             (change)="onUpdateStopItemValue($event, 'volume', handlingUnitIndex, rowIndex)"
+              ></app-unit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Length" [prop]="'length'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-unit-cell [value]="value"
+                             [unitType]="mesuresUnitsTypes.length"
+                             (change)="onUpdateStopItemValue($event, 'length', handlingUnitIndex, rowIndex)"
+              ></app-unit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Width" [prop]="'width'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-inline-edit-cell [value]="value"
+                                    (change)="onUpdateStopItemValue($event, 'count', handlingUnitIndex, rowIndex)"></app-inline-edit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Density" [prop]="'density'">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex"
+                         let-value="value">
+              <app-unit-cell [value]="value"
+                             [unitType]="mesuresUnitsTypes.density"
+                             (change)="onUpdateStopItemValue($event, 'density', handlingUnitIndex, rowIndex)"
+              ></app-unit-cell>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+    <div class="row-action-legend">
+      <div class="blue"><i class="fa fa-copy"></i> Duplicate Handline Unit</div>
+      <div class="row-action-button blue"><i class="fa fa-plus-circle"></i> Add
+        Handline Unit
+      </div>
+      <div class="row-action-button red"><i class="fa fa-minus-circle"></i>
+        Remove Handline Unit
+      </div>
+    </div>
+  </div>
+</div>

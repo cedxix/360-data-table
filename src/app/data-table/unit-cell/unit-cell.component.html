@@ -1,0 +1,18 @@
+<div class="split-cells" *ngIf="currentLabel">
+  <div>
+    <app-inline-edit-cell [value]="currentLabel"
+                          (change)="onValueChange($event)"></app-inline-edit-cell>
+  </div>
+  <div>
+    <select class="data-table-select"
+            [value]="currentUnit"
+            (change)="onUnitChange($event)"
+    >
+      <option
+        *ngFor="let unit of unitTypes"
+        value="{{ unit.value }}">
+        {{ unit.label }}
+      </option>
+    </select>
+  </div>
+</div>

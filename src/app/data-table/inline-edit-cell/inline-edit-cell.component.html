@@ -1,0 +1,15 @@
+<div
+  class="inline-edit-cell"
+  (dblclick)="this.isEditing = true"
+  (keypress)="this.onChange($event)"
+>
+  <div *ngIf="!isEditing">{{currentValue}}</div>
+  <div *ngIf="isEditing">
+    <input
+      autofocus
+      [type]="inputType"
+      [value]="currentValue"
+      (blur)="this.onChange($event)"
+    />
+  </div>
+</div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { chain, get, map, cloneDeep } from 'lodash';
+import { DENSITY_UNITS, LENGTH_UNITS, VOLUME_UNITS, WEIGHT_UNITS } from './../unit-cell/constants/units-constants';
+
 
 @Component({
   selector: 'app-data-table',
@@ -10,36 +12,12 @@ export class DataTableComponent implements OnInit {
 
   handlingUnits = [];
 
-  weightUnits = [
-    {
-      value: 'Pounds',
-      label: 'lb'
-    }, {
-      value: 'Kilograms',
-      label: 'kg'
-    }
-  ];
-  volumeUnits = [
-    {
-      value: 'Cubic CM',
-      label: 'cm3'
-    }, {
-      value: 'Cubic Foot',
-      label: 'ft3'
-    }
-  ];
-  lengthUnits = [
-    {
-      value: 'Inches',
-      label: 'In'
-    }
-  ];
-  densityUnits = [
-    {
-      value: 'GM/CC',
-      label: 'gm/cc'
-    }
-  ];
+  mesuresUnitsTypes = {
+    density: DENSITY_UNITS,
+    length: LENGTH_UNITS,
+    volume: VOLUME_UNITS,
+    weight: WEIGHT_UNITS
+  };
 
   referenceTypes = [
     {
@@ -80,8 +58,7 @@ export class DataTableComponent implements OnInit {
     console.log('you are adding', handlingUnitIndex, rowIndex, stopItemId);
     const stopItemsRows = cloneDeep(this.handlingUnits[handlingUnitIndex].stopItems.rows);
     this.handlingUnits[handlingUnitIndex].stopItems.rows = [
-      ...stopItemsRows,
-      ...stopItemsRows[rowIndex]
+      ...stopItemsRows, ...stopItemsRows[rowIndex]
     ];
     console.log(this.handlingUnits);
   }
@@ -90,6 +67,20 @@ export class DataTableComponent implements OnInit {
     // FIXME: Implement your remove API logic here
     console.log('you are removing', handlingUnitIndex, rowIndex, stopItemId);
     get(this.handlingUnits, `${handlingUnitIndex}.stopItems.rows`).splice(rowIndex, 1);
+  }
+
+  onUpdateHandlingUnitValue(evt, column, handlingUnitIndex: number, rowIndex: number) {
+    // FIXME: implement your API logic for update here
+    const newValue = get(evt, 'target.value', evt);
+    const stopItemsRow = get(this.handlingUnits, `${handlingUnitIndex}.stopItems.rows.${rowIndex}`);
+    console.log(newValue, stopItemsRow, column, handlingUnitIndex, rowIndex);
+  }
+
+  onUpdateStopItemValue(evt, column, handlingUnitIndex: number, rowIndex: number) {
+    // FIXME: implement your API logic for update here
+    const newValue = get(evt, 'target.value', evt);
+    const stopItemsRow = get(this.handlingUnits, `${handlingUnitIndex}.stopItems.rows.${rowIndex}`);
+    console.log(newValue, stopItemsRow, column, handlingUnitIndex, rowIndex);
   }
 
 
